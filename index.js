@@ -17,6 +17,10 @@ app.get('/auth', (req, res) => {
   if(req.query.redirect_uri){
     // Set the redirect url cookie for later use
     res.cookie('redirect_uri', req.query.redirect_uri)
+
+    // Set the token_in_query cookie for later use
+    res.cookie('token_in_query', req.query.token_in_query)
+
     // Redirect to Google auth
     passport.authenticate('google', {
       scope: ['profile', 'email', 'https://www.googleapis.com/auth/admin.directory.group.readonly'],
@@ -44,8 +48,15 @@ app.get('/auth/callback',
           let token = generateJWT(user.id, user.displayName, user.emails[0].value, groups)
           // Set the Hackney cookie (expires in a week)
           res.cookie('hackneyToken', token, {maxAge: 604800, domain: process.env.COOKIE_DOMAIN});
+
+          // Put the token in as a get parameter to the callback URL if specified
+          let redirect_uri = req.cookies.redirect_uri;
+          if(req.cookies.token_in_query && req.cookies.token_in_query === 'true'){
+            redirect_uri += '?token=' + token;
+          }
+
           // Redirect to the redirect URL
-          res.redirect(req.cookies.redirect_uri);
+          res.redirect(redirect_uri);
         }else{
           res.send({error: "No redirect URI found"});
         }
