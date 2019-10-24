@@ -17,8 +17,6 @@ https://auth.hackney.gov.uk/auth?redirect_url=http://managearrears.hackney.gov.u
 2. The user will then log in to Google and then be redirected back to the redirect URL you specified.
 3. The JWT token will be set in the "hackneyToken" cookie and can be authenticated using the shared JWT secret. See below for the payload details.
 
-If your application is not on a hackney.gov.uk domain then you won't have access to the cookie, however if you pass the GET parameter token_in_query=true it will add the token as a GET parameter to the redirect URL. This is less ideal because it can show up in logs but should not be required for Hackney apps.
-
 ## How does it work?
 
 1. The user is directed to this service from another application, with a redirect_uri parameter passed along with the request
