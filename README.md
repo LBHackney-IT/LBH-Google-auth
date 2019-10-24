@@ -24,7 +24,7 @@ If your application is not on a hackney.gov.uk domain then you won't have access
 1. The user is directed to this service from another application, with a redirect_uri parameter passed along with the request
 2. We store the redirect_uri in a cookie and send the user to Google to log in
 3. Google sends the user back to this service with an OAuth token which is then upgraded to a user token along with requesting the user profile details
-4. We use this token to request via the Google Admin API which groups the user is part of
+4. We look up the groups for the user via the Google Admin API using an admin oAuth token
 5. We generate a JWT token with the user information and set it in the "hackneyToken" cookie. The payload of the token has the following structure:
 
 ```
@@ -47,6 +47,16 @@ with the following meanings:
 - _groups_: An array of the groups the user is a member of
 - _iat_: The issued time of the token (to be used for expiry by the applications)
 
+You can test logging in and inspect the token via the following URL:
+
+[https://auth.hackney.gov.uk/auth?redirect_url=http://auth.hackney.gov.uk/auth/check_token](https://auth.hackney.gov.uk/auth?redirect_url=http://auth.hackney.gov.uk/auth/check_token)
+
 ## How do I run it?
 
-Set up the environment variables as in config-sample.env.sh and bring them in to your shell using `. ./config.env.sh`. Then run `npm install` to install the dependencies and finally `node index.js` to run the application.
+Set up the environment variables as in config-sample.env.sh and bring them in to your shell using `. ./config.env.sh`. Then run `npm install` to install the dependencies and finally `node index.js` to run the application. To run it against a real Google authentication backend you will need to set up the ADMIN_REFRESH_TOKEN as follows:
+
+1. Make sure you have a Google user who has the permissions to read the groups API
+2. visit `/auth/admin`
+3. Log in as the admin user
+4. Copy the refresh token that is displayed in the browser and put it in the ADMIN_REFRESH_TOKEN environment variable
+5. Restart the application
