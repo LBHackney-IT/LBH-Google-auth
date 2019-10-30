@@ -66,7 +66,7 @@ app.get('/auth/callback', async (req, res) => {
     let token = generateJWT(userinfo.sub, userinfo.name, userinfo.email, groups)
 
     // Set the Hackney cookie (expires in a week)
-    res.cookie('hackneyToken', token, {maxAge: 604800, domain: process.env.COOKIE_DOMAIN});
+    res.cookie('hackneyToken', token, {maxAge: (7 * 24 * 60 * 1000), domain: process.env.COOKIE_DOMAIN});
 
     // Send the user on their way
     if(req.cookies.redirect_uri){
