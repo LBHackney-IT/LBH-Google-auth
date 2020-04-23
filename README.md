@@ -12,7 +12,7 @@ The application is quite simple to use from an application:
 
 1. Point the user to the login URL with a parameter letting it know which URL to send the user back to. e.g. 
 
-https://auth.hackney.gov.uk/auth?redirect_url=http://managearrears.hackney.gov.uk/login_callback
+https://auth.hackney.gov.uk/auth?redirect_uri=https://auth.hackney.gov.uk/auth/check_token
 
 2. The user will then log in to Google and then be redirected back to the redirect URL you specified.
 3. The JWT token will be set in the "hackneyToken" cookie and can be authenticated using the shared JWT secret. See below for the payload details.
