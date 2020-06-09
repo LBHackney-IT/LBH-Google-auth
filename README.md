@@ -47,7 +47,7 @@ with the following meanings:
 
 You can test logging in and inspect the token via the following URL:
 
-[https://auth.hackney.gov.uk/auth?redirect_url=http://auth.hackney.gov.uk/auth/check_token](https://auth.hackney.gov.uk/auth?redirect_url=http://auth.hackney.gov.uk/auth/check_token)
+[https://auth.hackney.gov.uk/auth?redirect_uri=http://auth.hackney.gov.uk/auth/check_token](https://auth.hackney.gov.uk/auth?redirect_uri=http://auth.hackney.gov.uk/auth/check_token)
 
 ## How do I run it?
 
