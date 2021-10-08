@@ -4,7 +4,7 @@
   "description": "Generate a JWT token for use in Hackney apps from Google auth",
   "main": "index.js",
   "scripts": {
-    "test": null,
+    "test": "jest",
     "start": "node index.js"
   },
   "repository": "https://github.com/LBHackney-IT/LBH-Google-auth",
@@ -15,5 +15,9 @@
     "express": "^4.17.1",
     "google-auth-library": "^5.5.1",
     "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "jest": "^27.2.4",
+    "mockdate": "^3.0.5"
   }
 }
