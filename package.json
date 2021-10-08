@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "prettier --check .",
+    "format": "prettier --write ."
   },
   "repository": "https://github.com/LBHackney-IT/LBH-Google-auth",
   "author": "Ben Pirt",
@@ -19,6 +21,7 @@
   "devDependencies": {
     "jest": "^27.2.4",
     "mockdate": "^3.0.5",
+    "prettier": "^2.4.1",
     "supertest": "^6.1.6"
   }
 }
