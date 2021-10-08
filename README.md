@@ -10,7 +10,7 @@ Because Hackney would like to be able to manage which users can do what via the 
 
 The application is quite simple to use from an application:
 
-1. Point the user to the login URL with a parameter letting it know which URL to send the user back to. e.g. 
+1. Point the user to the login URL with a parameter letting it know which URL to send the user back to. e.g.
 
 https://auth.hackney.gov.uk/auth?redirect_uri=https://auth.hackney.gov.uk/auth/check_token
 
