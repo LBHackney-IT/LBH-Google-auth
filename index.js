@@ -29,7 +29,8 @@ app.get('/auth', (req, res) => {
     // Redirect to Google auth
     const authorizeUrl = userOAuth2Client.generateAuthUrl({
       access_type: 'online',
-      scope: ['profile', 'email']
+      scope: ['profile', 'email'],
+      prompt: 'consent'
     });
     res.redirect(authorizeUrl)
   }else{
