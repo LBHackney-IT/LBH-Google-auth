@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  build_and_test:
+  build-deploy-staging:
     executor: node/default
     steps:
       - checkout
@@ -20,3 +20,8 @@ jobs:
           root: ~/project
           paths: .
 
+workflows:
+  version: 2
+  continuous-delivery:
+    jobs:
+      - build-deploy-staging
