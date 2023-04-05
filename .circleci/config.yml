@@ -2,23 +2,138 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.2
+  aws-cli: circleci/aws-cli@1.0.0
+  aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
+
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:14.15.4-browsers
+  docker-python:
+    docker:
+      - image: circleci/python:3.7
+
+references:
+  workspace_root: &workspace_root '~'
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
 
 jobs:
   build-deploy-staging:
-    executor: node/default
+    executor: aws-cli/default
     steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: npm
+      - *attach_workspace
+      - run:
+          name: Swap node versions
+          command: |
+            set +e
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+            nvm install v14
+            nvm use 14
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run:
+          name: deploy
+          command: |
+            export NEXT_PUBLIC_NODE_ENV=production
+            export NEXT_PUBLIC_ENV_NAME=staging
+            npm build && npm i --production=true && sudo npm i -g serverless@"<3" && sls deploy --stage staging
+  
+  tests:
+    executor: node-executor
+    steps:
+      - *attach_workspace
       - run:
           command: npm run test
           name: Run tests
+  
+  install-dependencies:
+    executor: node-executor
+    steps:
+      - *attach_workspace
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm i
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
       - persist_to_workspace:
-          root: ~/project
+          root: *workspace_root
           paths: .
+
+  assume-role-staging:
+    executor: docker-python
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: $AWS_ACCOUNT_STAGING
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
+
+  assume-role-production:
+    executor: docker-python
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: $AWS_ACCOUNT_PRODUCTION
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
 
 workflows:
   version: 2
   continuous-delivery:
     jobs:
-      - build-deploy-staging
+      - install-dependencies
+      - tests:
+          requires:
+            - install-dependencies
+      - assume-role-staging:
+          context: api-assume-role-staging-context
+          requires:
+            - tests
+            - e2e
+          filters:
+            branches:
+              only: main
+      - build-deploy-staging:
+          requires:
+            - assume-role-staging
+          filters:
+            branches:
+              only: main
+      - permit-deploy-production:
+          type: approval
+          requires:
+            - build-deploy-staging
+          filters:
+            branches:
+              only: main
+      - assume-role-production:
+          context: api-assume-role-housing-production-context
+          requires:
+            - permit-deploy-production
+          filters:
+            branches:
+              only: main
+      - build-deploy-production:
+          requires:
+            - assume-role-production
+          filters:
+            branches:
+              only: main
