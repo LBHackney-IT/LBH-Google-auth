@@ -1,0 +1,113 @@
+service: lbh-google-auth
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  timeout: 10
+  region: eu-west-2
+  stage: ${opt:stage}
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
+
+package:
+  individually: true
+  exclude:
+    - ./**
+
+functions:
+  lbh-google-auth:
+    name: ${self:service}-${self:provider.stage}
+    handler: src/lambda.handler
+    package:
+      include:
+        - lib/**
+        - node_modules/**
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+    vpc:
+      securityGroupIds: ${self:custom.securityGroups.${self:provider.stage}}
+      subnetIds: ${self:custom.subnets.${self:provider.stage}}
+    environment:
+      HACKNEY_SIGNING_TOKEN: ${env:HACKNEY_TOKEN}
+
+resources:
+  Resources:
+    CloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Aliases:
+            - ${self:custom.aliases.${self:provider.stage}}
+          PriceClass: PriceClass_100
+          ViewerCertificate:
+            AcmCertificateArn: ${self:custom.certificate-arn.${self:provider.stage}}
+            MinimumProtocolVersion: TLSv1.2_2018
+            SslSupportMethod: sni-only
+          DefaultCacheBehavior:
+            TargetOriginId: ${self:service}-${self:provider.stage}-custom-origin
+            ViewerProtocolPolicy: 'redirect-to-https'
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - PATCH
+              - POST
+              - DELETE
+            DefaultTTL: 0
+            MaxTTL: 0
+            MinTTL: 0
+            ForwardedValues:
+              QueryString: true
+              Cookies:
+                Forward: all
+          Enabled: true
+          Origins:
+            - Id: ${self:service}-${self:provider.stage}-custom-origin
+              DomainName: ${self:custom.domain-name}
+              OriginPath: /${self:provider.stage}
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+    staticImagesBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: auth-test-${opt:stage}-static-images
+
+custom:
+  domain-name:
+    Fn::Join:
+      - '.'
+      - - Ref: ApiGatewayRestApi
+        - execute-api
+        - eu-west-2
+        - amazonaws.com
+  aliases:
+    staging: auth-test-staging.hackney.gov.uk
+    production: auth-test.hackney.gov.uk
+  #certificate-arn:
+  #  development: arn:aws:acm:us-east-1:364864573329:certificate/fc2125d7-c8b7-4837-8f68-ffa62c1dec54
+  # staging: arn:aws:acm:us-east-1:715003523189:certificate/11327e5e-53d3-4b21-a613-f12ee0bed68d
+  #  production: arn:aws:acm:us-east-1:282997303675:certificate/852490a1-103e-41a9-bb86-79ecd88f2304
+  securityGroups:
+    development:
+      - sg-08e28776da7918e4b
+    staging:
+      - sg-0166cbf56b7e77af0
+    production:
+      - sg-0c40b8cfd2d03c359
+  subnets:
+    development:
+      - subnet-0140d06fb84fdb547
+      - subnet-05ce390ba88c42bfd
+    staging:
+      - subnet-06d3de1bd9181b0d7
+      - subnet-0ed7d7713d1127656
+    production:
+      - subnet-0beb266003a56ca82
+      - subnet-06a697d86a9b6ed01
