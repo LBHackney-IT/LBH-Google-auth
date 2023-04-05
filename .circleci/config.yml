@@ -131,33 +131,32 @@ workflows:
           context: api-assume-role-staging-context
           requires:
             - tests
-            - e2e
           filters:
             branches:
-              only: main
+              only: master
       - build-deploy-staging:
           requires:
             - assume-role-staging
           filters:
             branches:
-              only: main
+              only: master
       - permit-deploy-production:
           type: approval
           requires:
             - build-deploy-staging
           filters:
             branches:
-              only: main
+              only: master
       - assume-role-production:
           context: api-assume-role-housing-production-context
           requires:
             - permit-deploy-production
           filters:
             branches:
-              only: main
+              only: master
       - build-deploy-production:
           requires:
             - assume-role-production
           filters:
             branches:
-              only: main
+              only: master
