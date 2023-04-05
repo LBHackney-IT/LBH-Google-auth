@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node tests/index.test.js",
+    "build": "npm bulid",
     "start": "node index.js"
   },
   "repository": "https://github.com/LBHackney-IT/LBH-Google-auth",
