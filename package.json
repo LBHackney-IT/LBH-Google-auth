@@ -4,7 +4,7 @@
   "description": "Generate a JWT token for use in Hackney apps from Google auth",
   "main": "index.js",
   "scripts": {
-    "test": "node tests\\index.test.js",
+    "test": "node tests/index.test.js",
     "start": "node index.js"
   },
   "repository": "https://github.com/LBHackney-IT/LBH-Google-auth",
