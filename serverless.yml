@@ -20,10 +20,10 @@ package:
 functions:
   lbh-google-auth:
     name: ${self:service}-${self:provider.stage}
-    handler: lib/lambda.handler
+    handler: src/lambda.handler
     package:
       include:
-        - lib/**
+        - src/**
         - node_modules/**
     events:
       - http: ANY /
