@@ -90,10 +90,9 @@ custom:
   aliases:
     staging: auth-test-staging.hackney.gov.uk
     production: auth-test.hackney.gov.uk
-  #certificate-arn:
-  #  development: arn:aws:acm:us-east-1:364864573329:certificate/fc2125d7-c8b7-4837-8f68-ffa62c1dec54
-  # staging: arn:aws:acm:us-east-1:715003523189:certificate/11327e5e-53d3-4b21-a613-f12ee0bed68d
-  #  production: arn:aws:acm:us-east-1:282997303675:certificate/852490a1-103e-41a9-bb86-79ecd88f2304
+  certificate-arn:
+    staging: arn:aws:acm:us-east-1:715003523189:certificate/36b57122-fcab-4730-afc3-615e49a18f04
+    production: arn:aws:acm:us-east-1:715003523189:certificate/36b57122-fcab-4730-afc3-615e49a18f04
   securityGroups:
     development:
       - sg-08e28776da7918e4b
