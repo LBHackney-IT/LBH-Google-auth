@@ -20,7 +20,7 @@ package:
 functions:
   lbh-google-auth:
     name: ${self:service}-${self:provider.stage}
-    handler: src/lambda.handler
+    handler: lambda.handler
     package:
       include:
         - src/**
