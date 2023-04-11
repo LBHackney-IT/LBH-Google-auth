@@ -32,7 +32,13 @@ functions:
       securityGroupIds: ${self:custom.securityGroups.${self:provider.stage}}
       subnetIds: ${self:custom.subnets.${self:provider.stage}}
     environment:
-      HACKNEY_SIGNING_TOKEN: ${env:HACKNEY_TOKEN}
+      ADMIN_OAUTH_CALLBACK_URL: ${env:ADMIN_OAUTH_CALLBACK_URL}
+      ADMIN_REFRESH_TOKEN: ${env:ADMIN_REFRESH_TOKEN}
+      COOKIE_DOMAIN: ${env:COOKIE_DOMAIN}
+      JWT_SECRET: ${env:JWT_SECRET}
+      OAUTH_CALLBACK_URL: ${env:OAUTH_CALLBACK_URL}
+      OAUTH_CLIENT_ID: ${env:OAUTH_CLIENT_ID}
+      OAUTH_CLIENT_SECRET: ${env:OAUTH_CLIENT_SECRET}
 
 resources:
   Resources:
