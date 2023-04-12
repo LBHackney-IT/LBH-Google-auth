@@ -21,6 +21,10 @@ const adminOAuth2Client = new OAuth2Client(
   process.env.ADMIN_OAUTH_CALLBACK_URL
 );
 
+app.get('/', (req, res) => {
+  res.send('Hello')
+})
+
 // Redirect to Google auth
 app.get('/auth', (req, res) => {
   if(req.query.redirect_uri){

@@ -5,4 +5,6 @@ const path = require('path')
 
 server.use(files(path.join(__dirname, 'src')))
 
+console.log('Setting up restana....')
+
 module.exports.handler = require('serverless-http')(server)
