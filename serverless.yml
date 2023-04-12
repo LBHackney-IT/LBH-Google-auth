@@ -21,10 +21,6 @@ functions:
   lbh-google-auth:
     name: ${self:service}-${self:provider.stage}
     handler: src/lambda.handler
-    package:
-      include:
-        - src/**
-        - node_modules/**
     events:
       - http: ANY /
       - http: ANY /{proxy+}
