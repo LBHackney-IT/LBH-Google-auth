@@ -1,8 +1,12 @@
 const serverless = require('serverless-http');
 const express = require('express')
 const app = express()
- 
+const cookieParser = require('cookie-parser');
 const {OAuth2Client} = require('google-auth-library');
+
+const jwt_secret = process.env.JWT_SECRET
+
+app.use(cookieParser());
 
 const userOAuth2Client = new OAuth2Client(
     process.env.OAUTH_CLIENT_ID,
