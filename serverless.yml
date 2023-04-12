@@ -14,8 +14,6 @@ provider:
 
 package:
   individually: true
-  exclude:
-    - ./**
 
 functions:
   lbh-google-auth:
