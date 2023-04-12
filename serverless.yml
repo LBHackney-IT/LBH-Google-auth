@@ -12,13 +12,10 @@ provider:
   apiGateway:
     shouldStartNameWithService: true
 
-package:
-  individually: true
-
 functions:
   lbh-google-auth:
     name: ${self:service}-${self:provider.stage}
-    handler: src/lambda.handler
+    handler: index.handler
     events:
       - http: ANY /
       - http: ANY /{proxy+}
