@@ -23,11 +23,7 @@ const adminOAuth2Client = new OAuth2Client(
   );
 
 app.get('/', function (req, res) {
-  res.send('Hello World!' + process.env.OAUTH_CLIENT_ID)
-})
-
-app.get('/status', (req, res) => {
-    res.send('Google LBH Auth is running on an AWS Lambda!')
+  res.send('Google LBH Auth is running on an AWS Lambda!')
 })
 
 // Redirect to Google auth
