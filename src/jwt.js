@@ -11,7 +11,7 @@ function generateJWT(id, name, email, groups){
     groups: groups
   }
   return jwt.sign(body, jwt_secret, {
-    expiresIn: '24h'
+    expiresIn: '7d'
   });
 }
 
