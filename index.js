@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const {OAuth2Client} = require('google-auth-library');
 const {generateJWT} = require('./src/jwt');
 const jwt = require('jsonwebtoken');
+const {getGroups} = require('./src/groups');
 
 const jwt_secret = process.env.JWT_SECRET
 
