@@ -81,7 +81,7 @@ app.get('/auth', (req, res) => {
         res.send({error: "No redirect URI found"});
       }
     }catch(err){
-      res.send({error: "Error logging in"});
+      res.send({error: `Error logging in: ${err}`});
       console.log(err);
     }
   });
