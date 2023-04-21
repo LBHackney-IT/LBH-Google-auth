@@ -10,7 +10,9 @@ function generateJWT(id, name, email, groups){
     name: name,
     groups: groups
   }
-  return jwt.sign(body, jwt_secret);
+  return jwt.sign(body, jwt_secret, {
+    expiresIn: '7d'
+  });
 }
 
 module.exports = {generateJWT};
