@@ -63,14 +63,14 @@ resources:
               Cookies:
                 Forward: all
           Enabled: true
-          Origins:
-            - Id: ${self:service}-${self:provider.stage}-custom-origin
-              DomainName: ${self:custom.domain-name}
-              OriginPath: /${self:provider.stage}
-              CustomOriginConfig:
-                HTTPPort: 80
-                HTTPSPort: 443
-                OriginProtocolPolicy: https-only
+          #Origins:
+          #  - Id: ${self:service}-${self:provider.stage}-custom-origin
+          #    DomainName: ${self:custom.domain-name}
+          #    OriginPath: /${self:provider.stage}
+          #    CustomOriginConfig:
+          #      HTTPPort: 80
+          #      HTTPSPort: 443
+          #      OriginProtocolPolicy: https-only
     staticImagesBucket:
       Type: AWS::S3::Bucket
       Properties:
