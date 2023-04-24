@@ -58,3 +58,8 @@ Set up the environment variables as in config-sample.env.sh and bring them in to
 3. Log in as the admin user
 4. Copy the refresh token that is displayed in the browser and put it in the ADMIN_REFRESH_TOKEN environment variable
 5. Restart the application
+
+## Update 24/04/2023
+
+ - This service has now been moved from Heroku to AWS. For details of this change please contact david.dean@hackney.gov.uk
+ - As part of this transition, token expiry has been enabled. You should see this on your 'exp' claim on the token 
