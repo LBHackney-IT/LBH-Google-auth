@@ -56,32 +56,46 @@ app.get('/auth', (req, res) => {
   
   // Receives the call back from Google auth on login
   app.get('/auth/callback', async (req, res) => {
+
+    // Used to correlate logs
+    const timestampId = Date.now();
+
+    console.log(`Processing endpoint /auth/callback [${timestampId}]`)
+
     try{
       // Extract the oauth code used to retrieve the token
-      let code = req.query.code;
+      const code = req.query.code;
   
       // Fetch the token
-      let r = await userOAuth2Client.getToken(code);
+      console.log(`Fetching access token with provided code [${timestampId}]`)
+      const r = await userOAuth2Client.getToken(code);
   
       // Pull the user information out of the JWT ID token
-      let userinfo = jwt.decode(r.tokens.id_token)
+      console.log(`Parsing user information from access token [${timestampId}]`)
+      const userinfo = jwt.decode(r.tokens.id_token)
   
       // Fetch the groups from the Google groups API
-      let groups = await getGroups(userinfo.email);
+      console.log(`Fetching Google groups from API [${timestampId}]`)
+      const groups = await getGroups(userinfo.email);
   
-      // Generate the JWT token
-      let token = generateJWT(userinfo.sub, userinfo.name, userinfo.email, groups)
+      // Generate the JWT
+      console.log(`Generating JWT [${timestampId}]`)
+      const token = generateJWT(userinfo.sub, userinfo.name, userinfo.email, groups)
   
       // Set the Hackney cookie (expires in a week)
+      console.log(`Set token in response cookie [${timestampId}]`)
       res.cookie('hackneyToken', token, {maxAge: (7 * 24 * 60 * 60 * 1000), domain: process.env.COOKIE_DOMAIN});
   
       // Send the user on their way
       if(req.cookies.redirect_uri){
         // Redirect to the redirect URL
+        console.log(`Redirecting to redirect URL [${timestampId}]`)
         res.redirect(req.cookies.redirect_uri);
-      }else{
+      } else {
+        console.log(`No redirect URL found [${timestampId}]`)
         res.send({error: "No redirect URI found"});
       }
+
     }catch(err){
       res.send({error: `Error logging in: ${err}`});
       console.log(err);
