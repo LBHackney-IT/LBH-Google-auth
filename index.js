@@ -85,6 +85,7 @@ app.get('/auth', (req, res) => {
       // Set the Hackney cookie (expires in a week)
       console.log(`Set token in response cookie [${timestampId}]`)
       res.cookie('hackneyToken', token, {maxAge: (7 * 24 * 60 * 60 * 1000), domain: process.env.COOKIE_DOMAIN});
+      console.log(`${token.decode()}`)
   
       // Send the user on their way
       if(req.cookies.redirect_uri){
