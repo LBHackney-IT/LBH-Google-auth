@@ -85,7 +85,7 @@ custom:
         - eu-west-2
         - amazonaws.com
   aliases:
-    staging: auth-test-staging.hackney.gov.uk
+    staging: auth-test.hackney.gov.uk
     production: auth.hackney.gov.uk
   certificate-arn:
     staging: arn:aws:acm:us-east-1:715003523189:certificate/36b57122-fcab-4730-afc3-615e49a18f04
