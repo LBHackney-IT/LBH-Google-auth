@@ -1,3 +1,4 @@
+const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
 const {getGroups} = require('./lib/groups');
@@ -112,3 +113,5 @@ app.get('/auth/check_token', (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`App listening on port ${port}!`));
+
+module.exports.handler = serverless(app);
