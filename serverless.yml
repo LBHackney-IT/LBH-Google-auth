@@ -96,7 +96,7 @@ custom:
     staging:
       - sg-0166cbf56b7e77af0
     production:
-      - sg-07b2d01143385a6ae
+      - sg-07d5d1b647871ed04
   subnets:
     development:
       - subnet-0140d06fb84fdb547
