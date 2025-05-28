@@ -142,7 +142,7 @@ workflows:
             branches:
               only: master
       - assume-role-production:
-          context: api-assume-role-production-context
+          context: api-assume-role-disaster-recovery-context
           requires:
             - permit-deploy-production
           filters:
