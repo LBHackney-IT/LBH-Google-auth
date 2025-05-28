@@ -111,7 +111,7 @@ jobs:
     steps:
       - checkout
       - aws_assume_role/assume_role:
-          account: $AWS_ACCOUNT_PRODUCTION
+          account: $AWS_ACCOUNT_DISASTER_RECOVERY
           profile_name: default
           role: 'LBH_Circle_CI_Deployment_Role'
       - persist_to_workspace:
