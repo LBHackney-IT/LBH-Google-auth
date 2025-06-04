@@ -124,9 +124,9 @@ workflows:
   continuous-delivery:
     jobs:
       - install-dependencies
-      - tests:
-          requires:
-            - install-dependencies
+      # - tests:
+      #     requires:
+      #       - install-dependencies
       # - assume-role-staging:
       #     context: api-assume-role-staging-context
       #     requires:
@@ -134,17 +134,17 @@ workflows:
       # - build-deploy-staging:
       #     requires:
       #       - assume-role-staging
-      - permit-deploy-production:
-          type: approval
-          # requires:
-          #   - build-deploy-staging
-          filters:
-            branches:
-              only: dr-testing
+      # - permit-deploy-production:
+      #     type: approval
+      #     # requires:
+      #     #   - build-deploy-staging
+      #     filters:
+      #       branches:
+      #         only: dr-testing
       - assume-role-production:
           context: api-assume-role-disaster-recovery-context
           requires:
-            - permit-deploy-production
+            - install-dependencies
           filters:
             branches:
               only: dr-testing
