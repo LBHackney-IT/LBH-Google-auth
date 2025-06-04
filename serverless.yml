@@ -74,7 +74,7 @@ resources:
     staticImagesBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: auth-test-${opt:stage}-static-images
+        BucketName: auth-test-dr-testing-static-images
 
 custom:
   domain-name:
