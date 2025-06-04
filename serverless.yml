@@ -105,5 +105,5 @@ custom:
       - subnet-06d3de1bd9181b0d7
       - subnet-0ed7d7713d1127656
     production:
-      - subnet-0b3d84f1090ed1b2f
-      - subnet-0fe9914b2697c0c53
+      - subnet-05e595c59b7d6c8df
+      - subnet-0e6bc9b4ac24493cc
