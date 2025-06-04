@@ -86,10 +86,10 @@ custom:
         - amazonaws.com
   aliases:
     staging: auth-test.hackney.gov.uk
-    production: auth.hackney.gov.uk
+    # production: auth.hackney.gov.uk
   certificate-arn:
     staging: arn:aws:acm:us-east-1:715003523189:certificate/ff86b046-eebb-421e-8581-50676bb28fb1
-    production: arn:aws:acm:us-east-1:851725205572:certificate/9d53fdf1-531a-4665-9cfd-e93e6961c7f4
+    # production: arn:aws:acm:us-east-1:851725205572:certificate/9d53fdf1-531a-4665-9cfd-e93e6961c7f4
   securityGroups:
     development:
       - sg-08e28776da7918e4b
