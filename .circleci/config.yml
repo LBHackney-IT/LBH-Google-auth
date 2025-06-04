@@ -127,13 +127,13 @@ workflows:
       - tests:
           requires:
             - install-dependencies
-      - assume-role-staging:
-          context: api-assume-role-staging-context
-          requires:
-            - tests
-      - build-deploy-staging:
-          requires:
-            - assume-role-staging
+      # - assume-role-staging:
+      #     context: api-assume-role-staging-context
+      #     requires:
+      #       - tests
+      # - build-deploy-staging:
+      #     requires:
+      #       - assume-role-staging
       - permit-deploy-production:
           type: approval
           # requires:
