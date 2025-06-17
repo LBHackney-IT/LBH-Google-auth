@@ -32,8 +32,8 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            nvm install v14
-            nvm use 14
+            nvm install v22
+            nvm use 22
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
       - run:
@@ -55,8 +55,8 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            nvm install v14
-            nvm use 14
+            nvm install v22
+            nvm use 22
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
       - run:
@@ -138,19 +138,19 @@ workflows:
           type: approval
           requires:
             - build-deploy-staging
-          filters:
-            branches:
-              only: master
-      - assume-role-production:
-          context: api-assume-role-production-context
-          requires:
-            - permit-deploy-production
-          filters:
-            branches:
-              only: master
-      - build-deploy-production:
-          requires:
-            - assume-role-production
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
+      # - assume-role-production:
+      #     context: api-assume-role-production-context
+      #     requires:
+      #       - permit-deploy-production
+      #     filters:
+      #       branches:
+      #         only: master
+      # - build-deploy-production:
+      #     requires:
+      #       - assume-role-production
+      #     filters:
+      #       branches:
+      #         only: master
