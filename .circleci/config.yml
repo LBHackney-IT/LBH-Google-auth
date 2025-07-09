@@ -134,23 +134,23 @@ workflows:
       - build-deploy-staging:
           requires:
             - assume-role-staging
-      # - permit-deploy-production:
-      #     type: approval
-      #     requires:
-      #       - build-deploy-staging
-          # filters:
-          #   branches:
-          #     only: master
-      # - assume-role-production:
-      #     context: api-assume-role-production-context
-      #     requires:
-      #       - permit-deploy-production
-      #     filters:
-      #       branches:
-      #         only: master
-      # - build-deploy-production:
-      #     requires:
-      #       - assume-role-production
-      #     filters:
-      #       branches:
-      #         only: master
+      - permit-deploy-production:
+          type: approval
+          requires:
+            - build-deploy-staging
+          filters:
+            branches:
+              only: master
+      - assume-role-production:
+          context: api-assume-role-production-context
+          requires:
+            - permit-deploy-production
+          filters:
+            branches:
+              only: master
+      - build-deploy-production:
+          requires:
+            - assume-role-production
+          filters:
+            branches:
+              only: master
