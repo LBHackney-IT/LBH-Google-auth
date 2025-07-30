@@ -1,16 +1,16 @@
-# service: lbh-google-auth
+service: lbh-google-auth
 
-# frameworkVersion: '2'
+frameworkVersion: '2'
 
-# provider:
-#   name: aws
-#   runtime: nodejs18.x
-#   timeout: 30
-#   region: eu-west-2
-#   stage: ${opt:stage}
-#   lambdaHashingVersion: 20201221
-#   apiGateway:
-#     shouldStartNameWithService: true
+provider:
+  name: aws
+  runtime: nodejs18.x
+  timeout: 30
+  region: eu-west-2
+  stage: ${opt:stage}
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
 
 # functions:
 #   lbh-google-auth:
