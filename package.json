@@ -13,7 +13,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
-    "google-auth-library": "^5.5.1",
+    "google-auth-library": "^9.15.1",
     "jsonwebtoken": "^8.5.1",
     "path": "^0.12.7",
     "restana": "^4.9.7",
